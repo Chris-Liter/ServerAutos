@@ -12,7 +12,6 @@ import jakarta.persistence.Query;
 public class AutoDao {
 
 	@PersistenceContext
-	
 	private EntityManager em;
 	
 	public void insert(Autos autos) {
@@ -39,10 +38,10 @@ public class AutoDao {
 		return q.getResultList();
 	}
 	
-	public Autos getAutos(String cedula){
-		String jpql = "SELECT c FROM Autos c WHERE c.placa = :placa";
+	public Autos getAutos(int cedula){
+		String jpql = "SELECT c FROM Autos c WHERE c.codigo = :codigo";
 		Query q = em.createQuery(jpql, Autos.class);
-		q.setParameter("placa", cedula);
+		q.setParameter("codigo", cedula);
 		List<Autos> clientes = q.getResultList();
 		if(clientes.size()>0)
 			return clientes.get(0);

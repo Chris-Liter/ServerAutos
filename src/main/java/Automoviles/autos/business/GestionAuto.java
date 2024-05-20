@@ -4,6 +4,7 @@ import java.util.List;
 
 import Automoviles.autos.dao.AutoDao;
 import Automoviles.autos.model.Autos;
+import io.opentracing.Tracer;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
@@ -12,23 +13,22 @@ public class GestionAuto implements GestionAutoLocal, GestionAutoRemoto{
 
 	@Inject
 	private AutoDao dao;
+
+	
 	
 	@Override
 	public void guardar(Autos autos) {
 		dao.insert(autos);
-		
 	}
-
 	@Override
 	public void actualizar(Autos autos) {
-		Autos aut = dao.getAutos(autos.getPlaca());
+		Autos aut = dao.getAutos(autos.getCodigo());
 		if(aut != null) {
 			dao.update(autos);
 		}
 	}
-
 	@Override
-	public Autos getAuto(String dni) throws Exception {
+	public Autos getAuto(int dni) throws Exception {
 		Autos aut = dao.getAutos(dni);
 		if(aut != null) {
 			return aut;
@@ -36,17 +36,21 @@ public class GestionAuto implements GestionAutoLocal, GestionAutoRemoto{
 			return null;
 		}
 	}
-
 	@Override
 	public List<Autos> getAutos() {
 		return dao.getAll();
 	}
-
 	@Override
-	public void borrar(String id) {
-		Autos aut = dao.getAutos(id);
-		if(aut != null) {
-			dao.remove(aut.getCodigo());
+	public void borrar(int id) {
+		try {
+			Autos out = dao.getAutos(id);
+			if(out !=null) {
+				dao.remove(out.getCodigo());
+			}else {
+				System.out.println("No existe");
+			}
+		}catch(Exception s) {
+			s.printStackTrace();
 		}
 	}
 
