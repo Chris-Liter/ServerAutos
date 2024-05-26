@@ -4,15 +4,16 @@ import java.io.Serializable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Autos implements Serializable{
+public class Autos{
 
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	
 	@Id	
-	@GeneratedValue
+    @GeneratedValue
 	private int codigo;
 	private String marca;
 	private String color;
@@ -42,9 +43,7 @@ public class Autos implements Serializable{
 	public void setPlaca(String placa) {
 		this.placa = placa;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	
 	
 	@Override
 	public String toString() {

@@ -2,25 +2,15 @@
 
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import Automoviles.autos.business.GestionAuto;
+import Automoviles.autos.business.GestionAutoLocal;
+import Automoviles.autos.model.Autos;
 
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.eclipse.microprofile.opentracing.Traced;
-
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.media.Content;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.eclipse.microprofile.opentracing.Traced;
 
 //import javax.enterprise.context.ApplicationScoped;
 
 //import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import Automoviles.autos.business.GestionAuto;
-import Automoviles.autos.business.GestionAutoLocal;
-import Automoviles.autos.model.Autos;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -37,12 +27,12 @@ import jakarta.ws.rs.core.Response;
 //@RegisterRestClient(baseUri = "http://localhost:8080/auto/rs")
 //@Path("/")
 //@ApplicationScoped
-@Path("/autos")
 //@RequestScoped
+@Path("autos")
 public class AutoServices {
 
 	@Inject
-	private GestionAutoLocal ges;
+	private GestionAuto ges;
 	
 	
 	@POST
@@ -54,6 +44,8 @@ public class AutoServices {
 			return Response.ok(autos).build();
 		}catch(Exception ex) {
 			ErrorMessage error = new ErrorMessage(500,"Error al guardar cliente: "+ ex.getMessage());
+			
+			
 			return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
 		}
 	}
@@ -116,11 +108,7 @@ public class AutoServices {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("list")
-	@Traced(operationName = "cliente-rest-mp")
-	@Operation(description = "Invocar por medio de cliente microprofile a HelloWorld con respuesta en JSON", summary = "client call getHelloWorldJSON")
-		@APIResponse(responseCode = "200", description = "Saludo respuesta",
-					content = @Content(mediaType = MediaType.APPLICATION_JSON,
-						schema = @Schema(implementation = String.class)))
+	
 	public Response getClientes(){
 		System.out.println("Extrayendo autos");
 		List<Autos> clientes = ges.getAutos();

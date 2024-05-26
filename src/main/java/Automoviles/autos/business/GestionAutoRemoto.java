@@ -2,7 +2,6 @@ package Automoviles.autos.business;
 
 import java.util.List;
 
-import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 //import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -15,8 +14,8 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 
-//@RegisterRestClient(baseUri = "http://localhost:8080/autos/rest")
-@Remote
+//@RegisterRestClient(baseUri = "http://localhost:8080/autos/rest")//
+//@Remote
 public interface GestionAutoRemoto {
 
 	void guardar(Autos autos);
