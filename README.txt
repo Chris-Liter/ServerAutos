@@ -1,3 +1,12 @@
+Links de Docker Hub
+Wildfly: https://hub.docker.com/repository/docker/chrisliter/autos/general
+Angular: https://hub.docker.com/repository/docker/chrisliter/cliente/general
+
+
+
+
+
+
 This project was created from the archetype "wildfly-jakartaee-webapp-archetype".
 
 To deploy it:
