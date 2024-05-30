@@ -87,8 +87,10 @@ services:
       - datalogger_net
   
   angular:
-    image: angular
-    container_name: angularCliente
+    build:
+      context: ./Cliente
+      dockerfile: Dockerfile
+    container_name: angular
     hostname: cliente
     ports:
       - 4200:80
