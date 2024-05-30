@@ -1,0 +1,25 @@
+{
+    "openAPI": {
+        "info": {
+            "version": "1.0",
+            "title": "mtitek-swagger-samples",
+            "description": "Swagger API: <b>MyEntity</b>",
+            "termsOfService": "http://localhost:8888/",
+            "contact": {
+                "email": "contact@localhost",
+                "name": "localhost",
+                "url": "http://localhost:8888/"
+            },
+            "license": {
+                "name": "localhost license",
+                "url": "http://localhost:8888/"
+            }
+        },
+        "servers": [
+            {
+                "url": "http://localhost:8888/mtitek-swagger-samples-1.0.0-SNAPSHOT",
+                "description": "Development server"
+            }
+        ]
+    }
+}

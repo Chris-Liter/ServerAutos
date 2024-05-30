@@ -126,16 +126,35 @@
         <subsystem xmlns="urn:jboss:domain:core-management:1.0"/>
         <subsystem xmlns="urn:jboss:domain:datasources:6.0">
             <datasources>
-                <datasource jndi-name="java:jboss/datasources/PostgreSQLDS" pool-name="PostgreSQLDS" enabled="true" use-java-context="true">
+                <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
+                    <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
+                    <driver>h2</driver>
+                    <security>
+                        <user-name>sa</user-name>
+                        <password>sa</password>
+                    </security>
+                </datasource>
+
+                <datasource jndi-name="java:jboss/datasources/PostgreSQLDS" pool-name="PostgreSQLDS" enabled="true" statistics-enabled="true" use-java-context="true">
                     <connection-url>jdbc:postgresql://postgres:5432/autosdb</connection-url>
-                    <driver>postgresql</driver>
+                    <driver>postgresql-driver</driver>
+                    <pool>
+                        <min-pool-size>10</min-pool-size>
+                        <max-pool-size>20</max-pool-size>
+                    </pool>
                     <security>
                         <user-name>postgres</user-name>
                         <password>postgres</password>
                     </security>
+                    <timeout>
+                        <blocking-timeout-millis>5000</blocking-timeout-millis>
+                    </timeout>
                 </datasource>
                 <drivers>
-                    <driver name="postgresql" module="org.postgresql">
+                    <driver name="h2" module="com.h2database.h2">
+                        <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                    </driver>
+                    <driver name="postgresql-driver" module="org.postgresql">
                         <driver-class>org.postgresql.Driver</driver-class>
                     </driver>
                 </drivers>
@@ -336,9 +355,7 @@
                 <reporter-configuration reporter-log-spans="true"/>
             </jaeger-tracer>
         </subsystem>
-         <subsystem xmlns="urn:wildfly:microprofile-opentracing-smallrye:2.0">
-            <tracer use-default="true"/>
-        </subsystem>
+         
         <subsystem xmlns="urn:jboss:domain:naming:2.0"/>
         <subsystem xmlns="urn:jboss:domain:request-controller:1.0"/>
         <subsystem xmlns="urn:jboss:domain:resource-adapters:6.0"/>

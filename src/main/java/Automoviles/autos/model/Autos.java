@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Autos{
@@ -13,7 +14,8 @@ public class Autos{
 	//private static final long serialVersionUID = 1L;
 	
 	@Id	
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "autos_seq")
+    @SequenceGenerator(name = "autos_seq", sequenceName = "autos_seq", allocationSize = 1)
 	private int codigo;
 	private String marca;
 	private String color;

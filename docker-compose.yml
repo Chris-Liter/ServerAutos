@@ -40,6 +40,11 @@ services:
       - DB_NAME=autosdb
       - DB_USER=postgres
       - DB_PASSWORD=postgres
+      - JAEGER_AGENT_HOST=jaegertracingio
+      - JAEGER_AGENT_PORT=6831
+      - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
+
       
     ports:
       - "8080:8080"
@@ -54,9 +59,20 @@ services:
       - autos
     image: swaggerapi/swagger-ui
     environment:
-      API_URL: http://localhost:8080/autos/rest/autos/
+      SWAGGER_JSON: /api/openapi.yaml
     ports:
       - 8888:8080
+    volumes:
+      - ./openapi.yaml:/api/openapi.yaml
+    networks:
+      - datalogger_net
+
+  swaggereditor:
+    depends_on:
+      - autos
+    image: swaggerapi/swagger-editor
+    ports:
+      - 9999:8080
     networks:
       - datalogger_net
 
@@ -65,13 +81,19 @@ services:
       - autos
     image: jaegertracing/all-in-one:1.16.0
     ports:
-      - "6831:6831/udp"
-      - "6832:6832/udp"
-      - "5778:5778"
-      - "16686:16686"
-      - "14268:14268"
-      - "14250:14250"
-      - "9411:9411"
+      - 6831:6831/udp
+      - 16686:16686
+    networks:
+      - datalogger_net
+  
+  angular:
+    image: angular
+    container_name: angularCliente
+    hostname: cliente
+    ports:
+      - 4200:80
+    depends_on:
+      - autos
     networks:
       - datalogger_net
 

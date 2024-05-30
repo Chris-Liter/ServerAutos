@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 
 @Stateless
 public class AutoDao {
+	
 	@PersistenceContext
 	private EntityManager em;
 	

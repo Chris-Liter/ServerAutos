@@ -49,7 +49,7 @@ RUN echo "Starting WildFly server" && \
 
 # Exponer los puertos necesarios
 EXPOSE 8080
-EXPOSE 9990
+#EXPOSE 9990
 
 # Comando para iniciar WildFly con la configuración específica
 CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]

@@ -1,0 +1,184 @@
+openapi: 3.0.3
+info:
+  title: Automóviles API
+  description: API para la gestión de automóviles.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@automoviles.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/autos/rest
+tags:
+  - name: autos
+    description: Todo sobre automóviles
+paths:
+  /autos:
+    post:
+      tags:
+        - autos
+      summary: Crear un nuevo automóvil
+      description: Crear un nuevo automóvil en la base de datos.
+      operationId: crearAuto
+      requestBody:
+        description: Datos del automóvil a crear
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auto'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auto'
+        '400':
+          description: Error al guardar el automóvil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    put:
+      tags:
+        - autos
+      summary: Actualizar un automóvil existente
+      description: Actualizar los datos de un automóvil existente en la base de datos.
+      operationId: actualizarAuto
+      requestBody:
+        description: Datos del automóvil a actualizar
+        required: true
+        content:
+          application/json:
+            schema:
+                   $ref: '#/components/schemas/AutoPut'
+                   
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auto'
+        '406':
+          description: Error al actualizar el automóvil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - autos
+      summary: Borrar un automóvil
+      description: Borrar un automóvil de la base de datos.
+      operationId: borrarAuto
+      parameters:
+        - name: id
+          in: query
+          description: ID del automóvil a borrar
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: integer
+        '500':
+          description: Error al borrar el automóvil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /autos/list:
+    get:
+      tags:
+        - autos
+      summary: Obtener todos los automóviles
+      description: Obtener todos los autos
+      operationId: leerAutoPorPlaca
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auto'
+        '404':
+          description: Automóvil no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /autos/{dni}:
+    get:
+      tags:
+        - autos
+      summary: Obtener un automóvil por su DNI
+      description: Obtener los datos de un automóvil por su DNI.
+      operationId: leerAutoPorDNI
+      parameters:
+        - name: dni
+          in: path
+          description: DNI del automóvil a obtener
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auto'
+        '404':
+          description: Automóvil no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+components:
+  schemas:
+    Auto:
+      type: object
+      properties:
+        marca:
+          type: string
+          example: 'Toyota'
+        color:
+          type: string
+          example: 'Rojo'
+        placa:
+          type: string
+          example: 'ABC123'
+          
+    AutoPut:
+      type: object
+      properties:
+        codigo:
+          type: integer
+          format: int64
+          example: 1
+        marca:
+          type: string
+          example: 'Toyota'
+        color:
+          type: string
+          example: 'Rojo'
+        placa:
+          type: string
+          example: 'ABC123'
+        
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

@@ -1,10 +1,12 @@
 Automoviles\autos\services\AutoServices.class
+Automoviles\autos\swagger\Context.class
+Automoviles\autos\services\PathBase.class
+Automoviles\autos\model\Autos.class
 Automoviles\autos\services\ErrorMessage.class
 Automoviles\autos\business\GestionAutoLocal.class
 Automoviles\autos\dao\AutoDao.class
 Automoviles\autos\business\GestionAuto.class
 Automoviles\autos\services\CORSFilter.class
-Automoviles\autos\services\PathBase.class
 Automoviles\autos\services\JAXActivator.class
+Automoviles\autos\swagger\Config.class
 Automoviles\autos\business\GestionAutoRemoto.class
-Automoviles\autos\model\Autos.class

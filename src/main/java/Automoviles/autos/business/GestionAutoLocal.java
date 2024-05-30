@@ -2,12 +2,12 @@ package Automoviles.autos.business;
 
 import java.util.List;
 
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import Automoviles.autos.model.Autos;
 import jakarta.ejb.Local;
 import jakarta.ws.rs.PathParam;
 
-//@RegisterRestClient(baseUri = "http://localhost:8080/autos/rest")
 ///@Local
 public interface GestionAutoLocal {
 	
